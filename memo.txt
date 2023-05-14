@@ -1,0 +1,20 @@
+
+jacocoTestReportはxxxx.execファイルからhtmlのレポートを作るだけの模様
+
+このプロジェクトはJacocoUtilsで
+実行結果を端末内にxxxx.execを保存するようにしている
+これをpullしてjacocoTestReportでレポート作成
+
+
+個別のandroidTestを実行後
+
+MyApp2\app\reports\coverageECに行き
+
+adb pull /sdcard/Android/data/com.example.myapp2/files/Documents/coverage.exec
+を実行
+
+jacocoTestReport
+を実行
+
+
+
