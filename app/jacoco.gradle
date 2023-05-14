@@ -1,0 +1,37 @@
+apply plugin: 'jacoco'
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        //xml.required = true
+        html.required = true
+    }
+
+    def excludeClasses = ['**/R*.class',
+                          '**/*$InjectAdapter.class',
+                          '**/*$ModuleAdapter.class',
+                          '**/*$ViewInjector*.class']
+
+    def javaClassDirectories = fileTree(
+            dir: "$buildDir/intermediates/javac/debug/classes",
+            excludes: excludeClasses)
+
+    def kotlinClassDirectories = fileTree(
+            dir: "$buildDir/tmp/kotlin-classes/debug",
+            excludes: excludeClasses)
+
+
+    def coverageSourceDirs = [
+            "$buildDir/../src/main/java"
+    ]
+
+    def coverageExecutionData = files("$projectDir/reports/coverageEC/coverage.exec")
+
+    getClassDirectories().setFrom(javaClassDirectories + kotlinClassDirectories)
+    getSourceDirectories().setFrom(coverageSourceDirs)
+    getExecutionData().setFrom(coverageExecutionData)
+}
